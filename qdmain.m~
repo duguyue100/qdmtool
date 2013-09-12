@@ -88,13 +88,11 @@ end
 %% Results
 
 if (simulationMode==1)
-    disp('Result of Two-Stage QDM:');
     for i=1:nDecisionB
         result=sprintf('Result of Decision %d: \n', i);
         disp(result);
         disp(Result(i,:));
     end
 elseif (simulationMode==2)
-    disp('Result of One-Stage QDM: ');
-    disp(Result);
+    disp
 end
