@@ -4,6 +4,7 @@ clc;
 clear;
 close all;
 
+% specify dataList's name
 datasetList='dataList.mat';
 
 %% Initialization
@@ -72,7 +73,7 @@ if (simulationMode==1)
         decision=temp(:);
         PSI2=transform(Hamiltonian, time, decision(nDecisionA*nDecisonB*(i-1)+1:nDecisionA*nDecisionB*i));
         CurrentResult=abs(PSI2.^2);
-        Result=[Result; CurrentResult(i*nDecisionA+1:i*nDecisionA+nDecisionA-1)'];
+        Result=[Result; CurrentResult((i-1)*nDecisionA+1:i*nDecisionA)'];
     end
 
 elseif (simulationMode==2)
@@ -81,7 +82,10 @@ elseif (simulationMode==2)
     PSITWO=transform(Hamiltonian, time, PSIONE);
     PSITWO=abs(PSITWO.^2);
     
-    
+    Result=zeros(1,nDecsionA);
+    for i=1:nDecisionB
+        Result=Result+PSITWO((i-1)*nDecisionA+1:i*nDecisionA)';
+    end
 end
 
 
