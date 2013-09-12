@@ -1,8 +1,8 @@
 %% Clear running history and set working parameters
 
-clc;
-clear;
-close all;
+clc
+clear
+close all
 
 % specify dataList's name
 datasetList='dataList.mat';
@@ -30,11 +30,11 @@ end
 % Setting Parameters
 
 % noDecisionA=number of A's Decisions, noDecisionB=number of B's Decisions;
-[noDecisionA, noDecisionB]=calculateDecisionSapce(playerAPayoff, playerBPayoff);
+[noDecisionA, noDecisionB]=calculateDecisionSpace(playerAPayoff, playerBPayoff);
 
 % Initial Quantum State
 
-PSI0=ones(nDecisionB, nDecisionA)*(1/sqrt(nDecisionA*nDecisionB));
+PSI0=ones(noDecisionB, noDecisionA)*(1/sqrt(noDecisionA*noDecisionB));
 
 % Time factor
 
@@ -60,20 +60,21 @@ if (simulationMode==1)
     % First Transformation
     
     PSI1=[];
-    for i=1:nDecisionB
-        temp=zeros(nDecisionB,nDecisionA);
-        temp(i,:)=PSI(i,:)*sqrt(nDecisionB);
+    for i=1:noDecisionB
+        temp=zeros(noDecisionB,noDecisionA);
+        temp(i,:)=PSI0(i,:)*sqrt(noDecisionB);
         PSI1=[PSI1;temp];
     end
 
     % Second Transformation
     
-    for i=1:nDecisionB
+    for i=1:noDecisionB
         temp=PSI1';
         decision=temp(:);
-        PSI2=transform(Hamiltonian, time, decision(nDecisionA*nDecisonB*(i-1)+1:nDecisionA*nDecisionB*i));
+        PSI2=transform(Hamiltonian, time, decision(noDecisionA*noDecisionB*(i-1)+1:noDecisionA*noDecisionB*i));
         CurrentResult=abs(PSI2.^2);
-        Result=[Result; CurrentResult((i-1)*nDecisionA+1:i*nDecisionA)'];
+        %Result=[Result; CurrentResult((i-1)*noDecisionA+1:i*noDecisionA)'];
+        Result=[Result; CurrentResult'];
     end
 
 elseif (simulationMode==2)
@@ -82,9 +83,9 @@ elseif (simulationMode==2)
     PSITWO=transform(Hamiltonian, time, PSIONE);
     PSITWO=abs(PSITWO.^2);
     
-    Result=zeros(1,nDecsionA);
-    for i=1:nDecisionB
-        Result=Result+PSITWO((i-1)*nDecisionA+1:i*nDecisionA)';
+    Result=zeros(1,noDecisionA);
+    for i=1:noDecisionB
+        Result=Result+PSITWO((i-1)*noDecisionA+1:i*noDecisionA)';
     end
 end
 
@@ -93,7 +94,7 @@ end
 
 if (simulationMode==1)
     disp('Result of Two-Stage QDM:');
-    for i=1:nDecisionB
+    for i=1:noDecisionB
         result=sprintf('Result of Decision %d: \n', i);
         disp(result);
         disp(Result(i,:));

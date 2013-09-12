@@ -5,16 +5,18 @@ function Hamiltonian=calculateHamiltonian(playerAPayoff, noDecisionA, playerBPay
 
 % calculate HA
 
-Hadamard=hadmard(noDecisionA);
+Hadamard=hadamard(noDecisionA);
 
 HA=zeros(noDecisionA*noDecisionB);
 for i=1:noDecisionB
-    U=zeros(noDecisionA, noDecisionA);
-    utility=calcauleUtility(playerAPayoff, playerBPayoff, i);
-    U=U.*(utility*eye(nDecisionA));
+    U=ones(noDecisionA, noDecisionA);
+    % utility=calcauleUtility(playerAPayoff, playerBPayoff, i);
+    % for testing
+    utility=0.51;
+    U=U+(utility*eye(noDecisionA))-eye(noDecisionA);
     HATemp=(1/sqrt(utility^2+noDecisionA-1))*(Hadamard.*U);
-    start=(i-1)*nDecisionA+1;
-    endd=i*nDecisionA;
+    start=(i-1)*noDecisionA+1;
+    endd=i*noDecisionA;
     HA(start:endd,start:endd)=HATemp;
 end
 

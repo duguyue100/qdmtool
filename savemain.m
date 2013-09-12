@@ -1,7 +1,7 @@
 %% Clear running history
 
 clc
-clear
+%clear
 close all
 
 %% Description
@@ -21,7 +21,7 @@ choice=input('Enter (e.g. 1,2,...): ');
 switch (choice)
     case 1
         disp('-----Save Payoff Matrix-----');
-        datasetName=input('Enter dataset name','s');
+        datasetName=input('Enter dataset name: ','s');
         playerAPayoffName=input('Enter Player A''s Payoff Matrix name: ','s');
         playerBPayoffName=input('Enter Player B''s Payoff Matrix name: ', 's');
         savePayoffMatrix(datasetName, playerAPayoffName, playerBPayoffName);
