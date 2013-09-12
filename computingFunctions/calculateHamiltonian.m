@@ -9,12 +9,17 @@ Hadamard=hadamard(noDecisionA);
 
 HA=zeros(noDecisionA*noDecisionB);
 for i=1:noDecisionB
-    U=ones(noDecisionA, noDecisionA);
+    % calculating utility.
     % utility=calcauleUtility(playerAPayoff, playerBPayoff, i);
     % for testing
     utility=0.51;
+    
+    % calculating HATemp
+    U=ones(noDecisionA, noDecisionA);
     U=U+(utility*eye(noDecisionA))-eye(noDecisionA);
     HATemp=(1/sqrt(utility^2+noDecisionA-1))*(Hadamard.*U);
+    
+    % replacing HATemp in HA
     start=(i-1)*noDecisionA+1;
     endd=i*noDecisionA;
     HA(start:endd,start:endd)=HATemp;
